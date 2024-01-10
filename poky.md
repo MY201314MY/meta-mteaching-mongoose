@@ -642,7 +642,7 @@ SRC_URI = " \
 S = "${WORKDIR}"
 ```
 
-**mian.c**
+**main.c**
 
 ```c
 #include <stdio.h>
@@ -717,6 +717,52 @@ total 92
 drwxr-xr-x 5 pi pi  4096  1月  9 14:23 CMakeFiles
 -rw-r--r-- 1 pi pi  3140  1月  9 14:23 cmake_install.cmake
 -rw-r--r-- 1 pi pi    20  1月  9 14:23 install_manifest.txt
+```
+
+
+
+```shell
+pi@inspiron:~/Documents/yocto/poky/build/tmp/work/core2-64-poky-linux/california/1.0-r0$ bitbake -e california | grep "^S="
+S="/home/pi/Documents/yocto/poky/build/tmp/work/core2-64-poky-linux/california/1.0-r0"
+```
+
+
+
+```shell
+pi@inspiron:~/Documents/yocto/poky/build/tmp/work/core2-64-poky-linux/california/1.0-r0$ find . | grep main.c
+./packages-split/california-src/usr/src/debug/california/1.0-r0/src/main.c
+./src/main.c
+./build/CMakeFiles/california.dir/src/main.c.o
+./recipe-sysroot-native/usr/share/cmake-3.22/Modules/FortranCInterface/Verify/main.c
+./recipe-sysroot-native/usr/share/cmake-3.22/Modules/CheckIPOSupported/main.cpp
+./recipe-sysroot-native/usr/share/cmake-3.22/Modules/CheckIPOSupported/main.c
+./package/usr/src/debug/california/1.0-r0/src/main.c
+```
+
+
+
+```shell
+pi@inspiron:~/Documents/yocto/poky/build/tmp/work/core2-64-poky-linux/california/1.0-r0$ ls -l src
+total 4
+-rw-r--r-- 3 pi pi 116  4月  6  2011 main.c
+pi@inspiron:~/Documents/yocto/poky/build/tmp/work/core2-64-poky-linux/california/1.0-r0$ cat src/main.c
+#include <stdio.h>
+#include <unistd.h>
+
+int main(int argc, char **argv)
+{
+	printf("california.\r\n");
+
+	return 0;
+}
+pi@inspiron:~/Documents/yocto/poky/build/tmp/work/core2-64-poky-linux/california/1.0-r0$ cat CMakeLists.txt
+cmake_minimum_required(VERSION 3.12.4)
+
+project(california VERSION 0.1.0)
+
+add_executable(california ./src/main.c)
+
+install(TARGETS california DESTINATION ${CMAKE_INSTALL_PREFIX}/sbin)
 ```
 
 
